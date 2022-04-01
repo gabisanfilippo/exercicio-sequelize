@@ -113,3 +113,25 @@ Turma.bulkCreate([
         professor_id: 1
     }
 ])
+
+//Atividade II - Selecionando Informações
+
+(async () => {
+    const result = await Aluno.findAll({raw:true})
+    console.log(result)
+})()
+
+// Desafio
+const resultadoAreaId = async (areaNome)=>{
+    const resultado = await Area.findOne({where:{tipo:areaNome}})
+    console.log(resultado.id)
+    let idarea = resultado.id
+    const create = await Curso.bulkCreate([
+        {nome: "Desenvolvimento Front-end",area_id: idarea},
+        {nome: "Desenvolvimento Back-end",area_id: idarea},
+        {nome: "Salesforce",area_id: idarea},
+        {nome: "Programação em C",area_id: idarea},
+        {nome: "Programação em Python",area_id: idarea}
+    ])
+}
+resultadoAreaId('Programação')
