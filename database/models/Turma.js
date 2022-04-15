@@ -1,26 +1,23 @@
-const {sequelize} = require('.')
-
-const Turma = (sequelize,DataTypes) => {
-    return sequelize.define('Turma', {
-        duracao: {
-            type: DataTypes.INTEGER
-        },
-        ano_inicio: {
-            type: DataTypes.INTEGER
-        },
-        semestre: {
-            type: DataTypes.INTEGER
-        },
-        curso_id: {
-            type: DataTypes.INTEGER
-        },
-        professor_id: {
-            type: DataTypes.INTEGER
-        }
+module.exports = (sequelize, DataTypes) => {
+    const Turma = sequelize.define('Turma', {
+        duracao: DataTypes.INTEGER,
+        ano_inicio: DataTypes.INTEGER,
+        semestre: DataTypes.INTEGER,
+        curso_id: DataTypes.INTEGER,
+        professor_id: DataTypes.INTEGER
     }, {
         tableName: 'turmas',
         timestamps: false
     })
-}
+    Turma.associate = (models) =>{
+        Turma.belongsTo(models.Professor,{as:"turma_professor", foreignKey:'professor_id'});
+        Turma.belongsTo(models.Curso,{as:"turma_curso",foreignKey:"curso_id"})
+    }
 
-module.exports = Turma
+    // Turma.associate= (models)=>{
+    //     Turma.belongsTo(models.Professor,{as:"turma_professor",foreignKey:" professor_id"})
+    // }
+
+    return Turma
+    
+}

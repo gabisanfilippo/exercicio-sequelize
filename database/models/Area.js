@@ -1,14 +1,12 @@
-const {sequelize} = require('.')
-
-const Area = (sequelize, DataTypes) => {
-    return sequelize.define('Area', {
-        tipo: {
-            type: DataTypes.STRING
-        }
+module.exports = (sequelize, DataTypes) => {
+    const Area = sequelize.define('Area', {
+        tipo: DataTypes.STRING
     }, {
-        tableName: "areas",
+        tableName: 'areas',
         timestamps: false
     })
+    Area.associate = ( models => {
+        Area.hasMany(models.Curso,{as: 'area_curso', foreignKey: "area_id"})
+    })
+    return Area
 }
-
-module.exports = Area

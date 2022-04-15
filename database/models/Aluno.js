@@ -1,20 +1,21 @@
-const {sequelize} = require('.')
-
 const Aluno = (sequelize, DataTypes) => {
-    return sequelize.define('Aluno', {
+    let aluno = sequelize.define(
+        'Aluno', 
+    {
         nome: {
-            type: DataTypes.STRING
-        },
-        sobrenome: {
-            type: DataTypes.STRING
-        },
-        ano_matricula: {
-            type: DataTypes.INTEGER
-        }
-    }, {
-        tableName: "alunos",
-        timestamps: false
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+          }
+         ,
+        sobrenome: DataTypes.STRING,
+        ano_matricula: DataTypes.INTEGER
+    },{
+        tableName:"alunos",
+        timestamps:false
     })
+    
+    return aluno
 }
 
 module.exports = Aluno

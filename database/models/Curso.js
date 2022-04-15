@@ -1,17 +1,15 @@
-const sequelize = require('.')
+module.exports = (sequelize, DataTypes) => {
+    const Curso = sequelize.define('Curso', {
+        nome: DataTypes.STRING,
+        area_id: DataTypes.INTEGER
 
-const Curso = (sequelize,DataTypes) => {
-    return sequelize.define('Curso', {
-        nome: {
-            type: DataTypes.STRING
-        },
-        area_id: {
-            type: DataTypes.INTEGER
-        }
     }, {
-        tableName: "cursos",
+        tableName: 'cursos',
         timestamps: false
     })
+    Curso.associate = ( models => {
+        Curso.hasMany(models.Turma,{as:"curso_turma",foreignKey:"curso_id"})
+        Curso.belongsTo(models.Area,{as: 'curso_area', foreignKey: "area_id"})
+    })
+    return Curso
 }
-
-module.exports = Curso
